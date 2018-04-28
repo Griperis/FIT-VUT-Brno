@@ -25,7 +25,6 @@ def test(r, c, art, abt,testn):
     for line in file:
         line = "".join(line.split())
         tmp.append(line.split(":"))
-
     for x in range(len(tmp)):
         if eval(tmp[x][0]) != x+1:
             print("Error: line:",x+1)
