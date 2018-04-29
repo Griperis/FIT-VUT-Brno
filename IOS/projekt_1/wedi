@@ -1,0 +1,190 @@
+#!/bin/sh
+
+#IOS projekt_1 - wrapper textoveho editoru
+#FIT VUT Brno
+#Zdenek Dolezal, xdolez82
+
+#skript je posixly correct
+#skript pouziva v logu jako oddelovac ; tudiz funkcnost
+#se soubory, ktere obsahuji v nazvu ; neni zarucena
+
+
+#test zda je nastavena promena wedi_RC
+if [ -z "$WEDI_RC" ]; then
+    echo "ERROR: Setup WEDI_RC as a filename">&2
+    exit 1
+fi
+#test zda soubor WEDI_RC existuje, pokud ne vytvori neexistujici adresare
+#na ceste k souboru a pote samotny soubor
+if [ ! -r "$WEDI_RC" ]; then
+    fld=$(echo "$WEDI_RC" | rev | cut -d/ -f2- | rev)
+    if [ ! -d "$fld" ]; then
+        mkdir -p "$fld"
+    fi
+    touch "$WEDI_RC"
+fi
+
+if [ ! -f "$WEDI_RC" ]; then
+    echo "ERROR: Wrong format of WEDI_RC, $WEDI_RC must be path to file">&2
+    exit 1
+fi
+
+#test zda existuje na stroji utilita real_path
+realpath . >/dev/null
+if [ $? -ne 0 ]; then
+    echo "ERROR: For correct functionality of script utillity realpath is needed">&2
+    exit 1
+fi
+
+#editory
+if [ -n "$EDITOR" ]; then
+    w_editor="$EDITOR"
+fi
+if [ -n "$VISUAL" ]&&[ -z "$EDITOR" ]; then
+    w_editor="$VISUAL"
+fi
+if [ -z "$VISUAL" ]&&[ -z "$EDITOR" ]; then
+    w_editor=vi
+fi
+
+#mazani logu o souborech ktere jiz neexistuji
+while read -r line
+do
+    #pokud uz neni cesta citelna, tak vymaz vsechny informace
+    if [ ! -f "$(echo "$line" | cut -f1 -d';')" ]; then
+        ln=$(grep -n ''"$line"'' "$WEDI_RC" | cut -f1 -d:)
+        sed -i -e "$ln"d "$WEDI_RC"
+    fi
+done < "$WEDI_RC"
+
+#nachystani promennych
+opt_m=false
+opt_l=false
+editor_return=0
+opt_c=0
+
+#zpracovani argumentu, maximalne jeden argument najednou {{osetruje opt_c}}
+while getopts :mla:b: opt
+do
+    case "$opt" in
+    #nejcasteji editovany soubor ve slozce
+    m)  opt_m=true
+        opt_c=$((opt_c+1));;
+    #vypsani vsech editovanych souboru pomoci wedi
+    l)  opt_l=true
+        opt_c=$((opt_c+1));;
+    # -.- po urcitem datumu
+    a)  opt_a=$OPTARG
+        opt_c=$((opt_c+1));;
+    # -.- pred urcitym datumem
+    b)  opt_b=$OPTARG
+        opt_c=$((opt_c+1));;
+    *)  echo "ERROR: Wrong argument">&2
+        exit 1;;
+    esac
+done
+OPTIND=$((OPTIND-1))
+shift $OPTIND
+
+if [ "$opt_c" -gt 1 ]; then
+    echo "ERROR: Only one argument is possible at once">&2
+    exit 1
+fi
+arg_rest=$* #zbytek argumentu (cesta)
+#urceni cesty
+if [ -d "$arg_rest" ]; then
+    #pokud je slozka zadana
+    current_path=$(realpath "$arg_rest")
+elif [ -z "$arg_rest" ]; then
+    #pokud neni zadano nic, bere se aktualni cesta
+    current_path=$(realpath .)
+elif [ ! -f "$arg_rest" ]; then
+    #pokud neni ani slozka ani soubor
+    echo "ERROR: Usable with an existing folder / file">&2
+    exit 1
+fi
+#pokud je zadan argument, kontrola jestli to neni soubor pro parametry -l -m -a -b
+if [ $opt_m = true ] || [ $opt_l = true ] || [ -n "$opt_a" ] || [ -n "$opt_b" ]; then
+    if [ -n "$arg_rest" ]; then
+        if [ -f "$(realpath "$arg_rest")" ]; then
+            echo "ERROR: Arguments -m -l -a -b are not usable with file">&2
+            exit 1
+        fi
+    fi
+fi
+#kontrola zda byl v dane slozce editovan nejaky soubor
+if  [ -d "$current_path" ] && [ -z "$(grep ''"$current_path"'/[^/]*;' "$WEDI_RC")" ]; then
+    echo "ERROR: No files were edited in this folder">&2
+    exit 1
+fi
+
+#argument m
+if [ $opt_m = true ]; then
+    #ziska cislo nejvetsiho poctu otevreni a pote najde radek ktery tomuto otevreni odpovida
+    real_path=$(grep ''"$current_path"'/[^/]*;' "$WEDI_RC"| sort -k2 -t';' -n | tail -1 | cut -f1 -d';')
+fi
+#argument l
+if [ $opt_l = true ]; then
+    #vypise vsechny nazvy souboru ktere obsahuji "current_path" (jsou v aktualni slozce)
+    cut -f1 -d';' "$WEDI_RC" | grep ''"$current_path"'/[^/]*$' | rev | cut -f1 -d/ | rev
+    exit 0
+fi
+#argument a - porovnani s posledni editaci souboru
+if [ -n "$opt_a" ]; then
+    #kontrola jestli je datum ve spravnem formatu
+    if [ -n "$(echo "$opt_a" | grep -Eo '^[0-9]{4}\-(0[1-9]|1[0-2])\-([1-2][0-9]|3[0-1]|0[1-9])$')" ]; then
+        #vypise vsechny nazvy souboru, ktere maji datum vetsi nebo rovno nez "opt_a"
+        awk -F';' '$3 >= "'$opt_a'" { print }' "$WEDI_RC" | cut -f1 -d';' |  grep ''"$current_path"'/[^/]*$' | rev | cut -f1 -d/ | rev
+        exit 0
+    else
+        echo "ERROR: Date is in wrong format">&2
+        exit 1
+    fi
+
+fi
+#argument b - porovnani s prvni editaci souboru
+if [ -n "$opt_b" ]; then
+    if [ -n "$(echo "$opt_b" | grep -Eo '^[0-9]{4}\-(0[1-9]|1[0-2])\-([1-2][0-9]|3[0-1]|0[1-9])$')" ]; then
+        #vypise vsechny nazvy souboru, ktere byly editovany pred zadanym datem
+        awk -F';' '$4 < "'$opt_b'" { print }' "$WEDI_RC" | cut -f1 -d';'  |  grep ''"$current_path"'/[^/]*$' | rev | cut -f1 -d/ | rev
+        exit 0
+    else
+        echo "ERROR: Date is in wrong format">&2
+        exit 1
+    fi
+fi
+#vezme posledni editovany soubor (test opt_m = false, aby nedoslo k prepsani real_path)
+if [ "$opt_m" = false ] && [ -d "$current_path" ]; then
+    #vezme posledni editovany soubor (na poslednim radku WEDI_RC)
+    real_path=$(grep ''"$current_path"'/[^/]*;' "$WEDI_RC" | tail -1 | cut -f1 -d';')
+fi
+#zadan soubor
+if [ "$opt_m" = false ] && [ -f "$arg_rest" ]; then
+    real_path=$(realpath "$arg_rest")
+fi
+#prace se souborem wedi_rc
+#format souboru je: CESTA;pocetEditaci;datumPosledniEditace;datumPrvnieditace
+if [ -f "$real_path" ]; then
+    #test zda uz v logu soubor je evidovan
+    if grep -q "$real_path;" "$WEDI_RC"; then
+        #najde realnou cestu v souboru a zmen pocet editaci a datum
+        "$w_editor" "$real_path"
+        editor_return=$?
+        open_count=$(grep ''"$real_path;"'' "$WEDI_RC" | cut -f2 -d';')
+        #ulozi si datum prvni editace do promene, aby nebylo smazano trvale
+        fe_date=$(grep ''"$real_path;"'' "$WEDI_RC" | cut -f4 -d';')
+        line_number=$(grep -n ''"$real_path;"'' "$WEDI_RC" | cut -f1 -d:)d
+        sed -i -e ''"$line_number"'' "$WEDI_RC"
+        open_count=$((open_count+1))
+        echo "$real_path;$open_count;$(date +%Y-%m-%d);$fe_date" >> "$WEDI_RC"
+    else
+    #prvni zapsani
+    "$w_editor" "$real_path"
+    editor_return=$?
+    echo "$real_path;1;$(date +%Y-%m-%d);$(date +%Y-%m-%d)" >> "$WEDI_RC"
+    fi
+else
+    echo "ERROR: File doesnt exist anymore">&2
+    exit 1
+fi
+exit $editor_return
