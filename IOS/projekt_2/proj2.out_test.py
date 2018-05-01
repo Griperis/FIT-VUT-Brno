@@ -14,8 +14,12 @@ def test(r, c, art, abt,testn):
 
 
     file = open("proj2.out","r")
+    if file is None:
+        print("Failed to open proj2.out file")
+        return
     tmp = []
     riders = []
+    riders_boarded = []
     error = 0
     error_action = 0
     error_boarding = 0
@@ -29,17 +33,20 @@ def test(r, c, art, abt,testn):
     if tmp is []:
         print("Warninig: file is empty")
         plus_error += 1
-        
+
     for x in range(len(tmp)):
         if eval(tmp[x][0]) != x+1:
             print("Error: line:",x+1)
             error_action += 1
         if ''.join(i for i in tmp[x][1] if not i.isdigit()) == "RID":
+            riderID = eval(re.findall('\d+', tmp[x][1])[0])
             if tmp[x][2] == "start":
                 riders_actual += 1
-                riders.insert(eval(re.findall('\d+', tmp[x][1])[0])-1, True)
+                riders.insert(riderID-1, True)
             if tmp[x][2] == "finish":
-                riders[eval(re.findall('\d+', tmp[x][1])[0])-1] = False
+                riders[riderID-1] = False
+            if boarding is True and tmp[x][2] == "boarding":
+                riders_boarded.insert(riderID-1,True);
             if boarding is True and tmp[x][2] == "enter":
                 error_boarding += 1
                 print("Error: riders cant enter stop if bus arrived, line:",x+1)
@@ -75,7 +82,9 @@ def test(r, c, art, abt,testn):
         if riders[x] is not False:
             print("Error: RID:",x+1,"did not finish")
             error += 1
-
+        if riders_boarded[x] is not True:
+            print("Error: RID:",x+1,"did not board");
+            error += 1
 
     if arrival is not 0:
         print("proj2.out_test",testn,": Error: bus arrived and didnt depart somewhere")
@@ -91,9 +100,18 @@ def test(r, c, art, abt,testn):
     if error_boarding is 0:
         print("proj2.out_test",testn,": boarding correct")
     print("-------------------------------------")
-    return arrival + error + error_action + error_boarding + plus_error
     file.close()
 
+    comp2 = []
+    file = open("proj2.out","r")
+    for line in file:
+        line = "".join(line.split())
+        comp2.append(line.split(":"))
+    if len(comp2) > len(tmp):
+        print("++ Something was added to file after execution")
+        plus_error += 1
+    file.close();
+    return arrival + error + error_action + error_boarding + plus_error
 if __name__ == '__main__':
     error_total = 0
     if len(sys.argv) is not 2:
@@ -101,9 +119,9 @@ if __name__ == '__main__':
         error_total += test(r, c, art, abt,1)
     else:
         for i in range(int(sys.argv[1])):
-            r = random.randint(1,100)
+            r = random.randint(1,500)
             c = random.randint(1,100)
-            art = random.randint(0,50)
-            abt = random.randint(0,50)
+            art = random.randint(0,200)
+            abt = random.randint(0,200)
             error_total += test(r,c,art,abt,i+1)
     print("proj2.out_test: summary: total errors:",error_total)
