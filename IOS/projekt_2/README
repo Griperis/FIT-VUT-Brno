@@ -1,6 +1,6 @@
 Projekt2 - synchronizace procesů
 The Senate Bus Problem
 + basic python test
-use ./proj2.out_test "args of project"
-or  ./proj2.out_test N
+use ./proj2.out_test.py "args of project"
+or  ./proj2.out_test.py N
 where N is number of tests for random numbers (for your needs change them in main function of script)
