@@ -54,7 +54,7 @@ def test(r, c, art, abt,testn):
                 error_boarding += 1
                 print("Error: riders cant enter stop if bus arrived, line:",x+1)
             if tmp[x][2] == "finish":
-                if riderID in riders_cur_boarded:
+                if boarding is True and riderID in riders_cur_boarded:
                     print("Error: riders should not finish in their ride")
                 riders[riderID-1] = False
 
@@ -98,7 +98,7 @@ def test(r, c, art, abt,testn):
         print("proj2.out_test",testn,": Error: bus arrived and didnt depart somewhere")
     if r != riders_actual:
         print("proj2.out_test",testn,": Error:", riders_actual,"riders", r, "expected")
-        pluse_error += 1
+        plus_error += 1
     else:
         print("proj2.out_test",testn,": all riders generated")
     if error is 0:
