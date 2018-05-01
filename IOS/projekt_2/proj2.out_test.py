@@ -29,6 +29,7 @@ def test(r, c, art, abt,testn):
     if tmp is []:
         print("Warninig: file is empty")
         plus_error += 1
+        
     for x in range(len(tmp)):
         if eval(tmp[x][0]) != x+1:
             print("Error: line:",x+1)
