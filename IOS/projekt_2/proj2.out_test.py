@@ -8,9 +8,9 @@ import random
 def test(r, c, art, abt,testn):
     print("proj2.out_test",testn,": ./proj2",r,c,art,abt)
     cwd = os.getcwd()
-    #if (subprocess.call(["./proj2", str(r), str(c), str(art), str(abt)]) is not 0):
-    #    print("Error: Failed executing ./proj2")
-    #    return
+    if (subprocess.call(["./proj2", str(r), str(c), str(art), str(abt)]) is not 0):
+        print("Error: Failed executing ./proj2")
+        return
 
 
     file = open("proj2.out","r")
