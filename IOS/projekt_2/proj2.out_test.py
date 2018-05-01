@@ -22,9 +22,13 @@ def test(r, c, art, abt,testn):
     riders_actual = 0
     boarding = False
     arrival = 0
+    plus_error = 0
     for line in file:
         line = "".join(line.split())
         tmp.append(line.split(":"))
+    if tmp is []:
+        print("Warninig: file is empty")
+        plus_error += 1
     for x in range(len(tmp)):
         if eval(tmp[x][0]) != x+1:
             print("Error: line:",x+1)
@@ -72,12 +76,13 @@ def test(r, c, art, abt,testn):
             error += 1
 
 
-    if r != riders_actual:
-        print("proj2.out_test",testn,": Error:", riders_actual,"riders", r, "expected")
-    else:
-        print("proj2.out_test",testn,": all riders generated")
     if arrival is not 0:
         print("proj2.out_test",testn,": Error: bus arrived and didnt depart somewhere")
+    if r != riders_actual:
+        print("proj2.out_test",testn,": Error:", riders_actual,"riders", r, "expected")
+        pluse_error += 1
+    else:
+        print("proj2.out_test",testn,": all riders generated")
     if error is 0:
         print("proj2.out_test",testn,": all riders finished")
     if error_action is 0:
@@ -85,16 +90,16 @@ def test(r, c, art, abt,testn):
     if error_boarding is 0:
         print("proj2.out_test",testn,": boarding correct")
     print("-------------------------------------")
-    return arrival + error + error_action + error_boarding
+    return arrival + error + error_action + error_boarding + plus_error
     file.close()
 
 if __name__ == '__main__':
     error_total = 0
-    if sys.argv[1] == "m":
-        r, c, art, abt = (int(x) for x in sys.argv[2:])
+    if len(sys.argv) is not 2:
+        r, c, art, abt = (int(x) for x in sys.argv[1:])
         error_total += test(r, c, art, abt,1)
-    elif sys.argv[1] == "a":
-        for i in range(int(sys.argv[2])):
+    else:
+        for i in range(int(sys.argv[1])):
             r = random.randint(1,100)
             c = random.randint(1,100)
             art = random.randint(0,50)
