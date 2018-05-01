@@ -56,12 +56,12 @@ def test(r, c, art, abt,testn):
             if tmp[x][2] == "finish":
                 if boarding is True and riderID in riders_cur_boarded:
                     print("Error: riders should not finish in their ride")
+                    riders_cur_boarded = []
                 riders[riderID-1] = False
 
         elif tmp[x][1] == "BUS":
             if tmp[x][2] == "arrival":
                 arrival += 1
-                riders_cur_boarded = []
             if tmp[x][2] == "depart":
                 arrival -= 1
             if boarding is True and (tmp[x][2] == "depart" or tmp[x][2] == "arrival"):
