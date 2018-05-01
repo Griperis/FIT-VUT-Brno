@@ -8,15 +8,15 @@ import random
 def test(r, c, art, abt,testn):
     print("proj2.out_test",testn,": ./proj2",r,c,art,abt)
     cwd = os.getcwd()
-    if (subprocess.call(["./proj2", str(r), str(c), str(art), str(abt)]) is not 0):
-        print("Error: Failed executing ./proj2")
-        return
+    #if (subprocess.call(["./proj2", str(r), str(c), str(art), str(abt)]) is not 0):
+    #    print("Error: Failed executing ./proj2")
+    #    return
 
 
     file = open("proj2.out","r")
     if file is None:
         print("Failed to open proj2.out file")
-        return
+        return -1
     tmp = []
     riders = []
     riders_boarded = []
@@ -27,9 +27,13 @@ def test(r, c, art, abt,testn):
     boarding = False
     arrival = 0
     plus_error = 0
+    riders_cur_boarded = []
     for line in file:
         line = "".join(line.split())
         tmp.append(line.split(":"))
+        if line is "":
+            print("Error: There should be no empty lines in output file")
+            return -1
     if tmp is []:
         print("Warninig: file is empty")
         plus_error += 1
@@ -43,17 +47,21 @@ def test(r, c, art, abt,testn):
             if tmp[x][2] == "start":
                 riders_actual += 1
                 riders.insert(riderID-1, True)
-            if tmp[x][2] == "finish":
-                riders[riderID-1] = False
             if boarding is True and tmp[x][2] == "boarding":
                 riders_boarded.insert(riderID-1,True);
+                riders_cur_boarded.append(riderID);
             if boarding is True and tmp[x][2] == "enter":
                 error_boarding += 1
                 print("Error: riders cant enter stop if bus arrived, line:",x+1)
+            if tmp[x][2] == "finish":
+                if riderID in riders_cur_boarded:
+                    print("Error: riders should not finish in their ride")
+                riders[riderID-1] = False
 
         elif tmp[x][1] == "BUS":
             if tmp[x][2] == "arrival":
                 arrival += 1
+                riders_cur_boarded = []
             if tmp[x][2] == "depart":
                 arrival -= 1
             if boarding is True and (tmp[x][2] == "depart" or tmp[x][2] == "arrival"):
