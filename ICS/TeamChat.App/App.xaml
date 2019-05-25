@@ -1,0 +1,22 @@
+﻿<Application x:Class="TeamChat.App.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:TeamChat.App"
+             xmlns:converters="clr-namespace:TeamChat.App.Converters"
+             xmlns:ViewModels="clr-namespace:TeamChat.App.ViewModels"
+             xmlns:Views="clr-namespace:TeamChat.App.Views"
+             xmlns:md="clr-namespace:Markdown.Xaml;assembly=Markdown.Xaml"
+             StartupUri="Views/LoginView.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <local:ViewModelLocator x:Key="ViewModelLocator" />
+            <converters:WidthConverter x:Key="WidthConverter" />
+            <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+            <converters:NullToVisibilityInverseConverter x:Key="NullToVisibilityInverseConverter" />
+            
+            <md:Markdown x:Key="Markdown" />
+            <md:TextToFlowDocumentConverter x:Key="TextToFlowDocumentConverter" Markdown="{StaticResource Markdown}" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
+
