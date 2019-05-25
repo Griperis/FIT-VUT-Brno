@@ -1,0 +1,7 @@
+.ippCode19
+jump overhop
+label hop
+write string@ahoj
+
+label overhop
+write string@okaj

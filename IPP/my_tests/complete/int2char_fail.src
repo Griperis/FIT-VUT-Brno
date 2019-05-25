@@ -1,0 +1,4 @@
+.ippCode19
+defvar GF@destination
+int2char GF@destination int@24555454
+write GF@destination

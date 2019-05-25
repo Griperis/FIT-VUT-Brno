@@ -1,0 +1,15 @@
+.ippcode19
+defvar GF@string
+defvar GF@int
+defvar GF@bool
+defvar GF@bool2
+
+read GF@string string
+read GF@int int
+read GF@bool bool
+read GF@bool2 bool
+
+write GF@string
+write GF@int
+write GF@bool
+write GF@bool2

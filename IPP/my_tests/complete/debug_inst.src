@@ -1,0 +1,13 @@
+.ippCode19
+createFrame
+pushFrame
+defvar LF@firstFrameVar
+createFrame
+pushframe
+defvar LF@secondFrameVar
+break
+popframe
+dprint LF@firstFrameVar
+dprint int@4
+dprint bool@false
+dprint string@pepe\032

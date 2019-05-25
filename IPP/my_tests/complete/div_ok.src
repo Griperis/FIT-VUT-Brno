@@ -1,0 +1,11 @@
+.ippCode19
+createframe
+defvar TF@testvar1
+defvar TF@testvar2
+read TF@testvar1 int
+read TF@testvar2 int
+pushframe
+defvar LF@vyslednik
+idiv LF@vyslednik LF@testvar1 LF@testvar2
+popframe
+write TF@vyslednik

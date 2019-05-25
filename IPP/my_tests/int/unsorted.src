@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program language="IPPcode19">
+    <instruction order="4" opcode="MOVE">
+        <arg1 type="var">GF@mojekrásnáproměnná1</arg1>
+        <arg2 type="bool">true</arg2>
+    </instruction>
+    <instruction order="1" opcode="DEFVAR">
+        <arg1 type="var">GF@mojekrásnáproměnná1</arg1>
+    </instruction>
+    <instruction order="2" opcode="MOVE">
+        <arg1 type="var">GF@mojekrásnáproměnná1</arg1>
+        <arg2 type="int">-54564654654564564564546545646</arg2>
+    </instruction>
+    <instruction order="7" opcode="MOVE">
+        <arg1 type="var">GF@mojekrásnáproměnná1</arg1>
+        <arg2 type="string"></arg2>
+    </instruction>
+    <instruction order="5" opcode="MOVE">
+        <arg1 type="var">GF@mojekrásnáproměnná1</arg1>
+        <arg2 type="bool">false</arg2>
+    </instruction>
+    <instruction order="6" opcode="MOVE">
+        <arg1 type="var">GF@mojekrásnáproměnná1</arg1>
+        <arg2 type="nil">nil</arg2>
+    </instruction>
+    <instruction order="3" opcode="MOVE">
+        <arg1 type="var">GF@mojekrásnáproměnná1</arg1>
+        <arg2 type="string">nádhernýstringsunicodemkterýmůžeshoditskriptismezeramaaescape\013sekvencema\999</arg2>
+    </instruction>
+</program>

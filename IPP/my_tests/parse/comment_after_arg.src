@@ -1,0 +1,4 @@
+.ippCode19
+READ GF@var bool #hmm
+WRITE GF@var#iable
+READ GF@pepe int

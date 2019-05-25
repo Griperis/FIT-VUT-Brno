@@ -1,0 +1,10 @@
+.iPpCode19
+LABEL Hello
+laBeL hoplahejsa
+LABEL Hello
+label peperonipizza
+LABEL Hello
+
+JUMP a15 #n2cmnt
+JUMPIFNEQ abc LF@bca TF@cba
+#n1cmnt

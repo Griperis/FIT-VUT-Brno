@@ -1,0 +1,31 @@
+.ippcode19
+defvar GF@result
+eq GF@result nil@nil int@5
+write GF@result
+write string@\010
+eq GF@result string@nil nil@nil
+write GF@result
+write string@\010
+eq GF@result nil@nil nil@nil
+write GF@result
+write string@\010
+write string@\010
+
+defvar GF@left
+defvar GF@right
+move GF@left nil@nil
+move GF@right nil@nil
+EQ GF@result GF@left GF@right
+write GF@result
+write string@\010
+move GF@left string@nil
+move GF@right nil@nil
+EQ GF@result GF@left GF@right
+write GF@result
+write string@\010
+move GF@left int@5
+move GF@right nil@nil
+EQ GF@result GF@left GF@right
+write GF@result
+write string@\010
+

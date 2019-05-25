@@ -1,0 +1,12 @@
+.ippcode19
+defvar GF@counter
+move GF@counter int@1
+defvar GF@target
+read GF@target int
+label skok
+write GF@counter
+add GF@counter GF@counter int@1
+
+jumpifneq skok GF@counter GF@target
+
+write string@vyskocil

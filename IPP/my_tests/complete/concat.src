@@ -1,0 +1,9 @@
+.ippCode19
+defvar GF@str1
+defvar GF@str2
+defvar GF@result
+move GF@str1 string@ahoj\032
+move GF@str2 string@pepo
+concat GF@result GF@str1 GF@str2
+
+write GF@result

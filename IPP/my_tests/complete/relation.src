@@ -1,0 +1,45 @@
+.ippCode19
+defvar GF@result
+
+EQ GF@result int@5 int@5
+write GF@result
+write string@\010
+
+EQ GF@result int@5 int@10
+write GF@result
+write string@\010
+
+EQ GF@result string@hudry string@hudry
+write GF@result
+write string@\010
+
+EQ GF@result string@hudry string@hudryhudry
+write GF@result
+write string@\010
+
+EQ GF@result nil@nil nil@nil
+write GF@result
+write string@\010
+
+LT GF@result int@-5555 int@5555
+write GF@result
+write string@\010
+
+LT GF@result int@5555 int@-5555
+write GF@result
+write string@\010
+
+GT GF@result string@hudrant string@hudrator
+write GF@result
+write string@\010
+
+defvar GF@left
+defvar GF@right
+
+move GF@left int@5
+move GF@right int@5
+EQ GF@result GF@left GF@right
+write GF@result
+write string@\010
+
+

@@ -1,0 +1,3 @@
+.ippcode19
+JUMPIFEQ hop GF@varvar GF@var
+LABEL hop

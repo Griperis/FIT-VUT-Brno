@@ -1,0 +1,4 @@
+.ippCode19
+defvar GF@result
+getchar GF@result string@ohny int@0
+write GF@result

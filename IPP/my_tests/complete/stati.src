@@ -1,0 +1,17 @@
+.IPPCode19
+defvar GF@pepe
+move GF@pepe string@pepe
+createframe
+createframe
+defvar TF@tmppepe
+defvar TF@tmppepe1
+pushframe
+defvar LF@pepe
+move LF@pepe string@hehe
+createframe
+pushframe
+defvar LF@pepe
+move LF@pepe int@5
+popframe
+
+

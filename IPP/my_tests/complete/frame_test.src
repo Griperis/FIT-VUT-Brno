@@ -1,0 +1,16 @@
+.ippCode19
+defvar GF@aha
+move GF@aha int@5
+createframe
+defvar TF@param1
+move TF@param1 GF@aha
+pushframe
+defvar LF@var
+move LF@var LF@param1
+popframe
+
+createframe
+defvar TF@par
+move TF@par string@aha
+pushframe
+popframe

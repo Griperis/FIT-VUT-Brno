@@ -1,0 +1,44 @@
+.ippCode19
+defvar GF@nothing
+defvar GF@saveTo
+type GF@saveTo GF@nothing
+write GF@saveTo
+write string@\010
+
+type GF@saveTo string@abrakadabra\032\010
+write GF@saveTo
+write string@\010
+
+type GF@saveTo int@-15
+write GF@saveTo
+write string@\010
+
+type GF@saveTo bool@true
+write GF@saveTo
+write string@\010
+
+type GF@saveTo nil@nil
+write GF@saveTo
+write string@\010
+
+defvar GF@something
+
+move GF@something string@hudryhudry
+type GF@saveTo GF@something
+write GF@saveTo
+write string@\010
+
+move GF@something int@-35
+type GF@saveTo GF@something
+write GF@saveTo
+write string@\010
+
+move GF@something bool@false
+type GF@saveTo GF@something
+write GF@saveTo
+write string@\010
+
+move GF@something nil@nil
+type GF@saveTo GF@something
+write GF@saveTo
+write string@\010
