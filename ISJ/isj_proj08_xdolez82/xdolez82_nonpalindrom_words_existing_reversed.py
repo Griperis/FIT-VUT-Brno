@@ -2,13 +2,13 @@
 
 import fileinput
 
-words = set()
+words = []
 for line in fileinput.input():
-    words.add(line.rstrip())
+    words.append(line.rstrip())
 #if checking whether something is present or not, its better to use set
+words = set(words)
 palindroms = [w for w in words if w == w[::-1]]
-palindroms = set(palindroms)
 #palindroms = set(palindroms)
-
 result = [w for w in words if w not in palindroms and w[::-1] in words]
+
 print(sorted(result))
