@@ -1,0 +1,10 @@
+b
+r
+br
+brc
+brcc
+c
+cb
+cr
+cbr
+
