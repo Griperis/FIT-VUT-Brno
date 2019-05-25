@@ -1,1 +1,1 @@
-## Projekt1 - wrapper textového editoru
+## Text editor wrapper

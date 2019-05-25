@@ -1,6 +1,6 @@
-## Projekty z předmětu ISJ na FIT VUT v Brně
+## Python projects (ISJ)
 
-### Hodnocení:
+### Results:
 * proj1 5/5
 * proj2 5/5
 * proj3 5/5
