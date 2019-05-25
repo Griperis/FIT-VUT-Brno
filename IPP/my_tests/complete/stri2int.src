@@ -1,6 +1,0 @@
-.ippCode19
-defvar GF@index
-defvar GF@result
-read GF@index int
-stri2int GF@result string@čevapčiči GF@index
-write GF@result

@@ -1,9 +1,0 @@
-.ippCode19
-write string@čabajkasmálsmetyvohomegadobrýčumímcelkem\032mohlobytojítismezerouačíslama\032123456789\010
-write int@-123456789
-write string@\010
-write bool@true
-write string@\010
-write bool@false
-write string@\010
-write nil@nil

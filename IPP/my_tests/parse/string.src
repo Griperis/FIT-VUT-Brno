@@ -1,5 +1,0 @@
-.ippcode19
-DEFVAR GF@a
-MOVE GF@a string@@@@@ahoj@ahoj@string@
-MOVE LF@nuf string@""""velkyspatnystring123456789"""""
-MOVE TF@string string@řetězec\032s\032lomítkem\032\092\032a\010novým\035řádkem

@@ -1,0 +1,15 @@
+Sockets
+https://www.binarytides.com/raw-sockets-c-code-linux/
+http://www.pdbuchan.com/rawsock/rawsock.html?fbclid=IwAR2wUpdaHEzMfMwFQ6uC-3dlZZ7LDDY6YMkG8dEY-9NqrudMO9K7YTFEZnk
+Pcap
+http://embeddedguruji.blogspot.com/2014/01/pcapfindalldevs-example.html
+https://en.wikipedia.org/wiki/Pcap
+https://www.tcpdump.org/manpages/pcap-filter.7.html
+https://www.tcpdump.org/pcap.html
+https://www.devdungeon.com/content/using-libpcap-c
+TCP/UDP
+https://github.com/rbaron/raw_tcp_socket/blob/master/raw_tcp_socket.c
+https://tools.ietf.org/html/rfc768
+http://man7.org/linux/man-pages/man3/getaddrinfo.3.html
+
+https://osqa-ask.wireshark.org/questions/19866/how-to-create-icmp-filters-with-both-type-and-code

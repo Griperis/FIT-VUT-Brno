@@ -1,5 +1,0 @@
-.IPPcode19
-#typetest
-READ GF@chobot int
-READ GF@tetrevec bool
-READ GF@jupik bubu

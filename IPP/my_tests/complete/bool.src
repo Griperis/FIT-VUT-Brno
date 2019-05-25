@@ -1,9 +1,0 @@
-.ippCode19
-defvar GF@test1
-defvar GF@test2
-
-read GF@test1 bool
-read GF@test2 bool
-
-write GF@test1
-write GF@test2

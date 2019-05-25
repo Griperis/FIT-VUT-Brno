@@ -1,7 +1,0 @@
-.ippcode19
-defvar GF@ahoj
-move GF@ahoj int@5
-jumpifneq hop GF@ahoj int@5
-write string@neskocil
-label hop
-write string@ajeza
